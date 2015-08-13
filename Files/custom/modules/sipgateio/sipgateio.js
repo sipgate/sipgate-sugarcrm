@@ -1,3 +1,4 @@
+var isPolling;
 $(document).ready(function () {
 	var sugarApiSearch = function (call, success) {
 		var apiData = $("#sipgateio");
@@ -176,5 +177,8 @@ $(document).ready(function () {
 		}, 3000);
 	};
 
-	poll();
+	if(!isPolling) {
+		isPolling = true;
+		poll();
+	}
 });
