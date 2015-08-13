@@ -27,5 +27,3 @@ class SipgateIO
 		return preg_replace("_/[^/]*(\\?.*)?\$_", "", $url);
 	}
 }
-
-?>
