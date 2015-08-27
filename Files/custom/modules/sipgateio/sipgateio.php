@@ -1,57 +1,37 @@
 <?php
 
+session_id("sipgateio");
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
 	handleSipgateIOEvent();
 } else {
 	handleSugarEventPoll();
 }
 
-function getFilename()
-{
-	return sys_get_temp_dir() . "/ioevent.data";
-}
-
 function writeToEventFile($data)
 {
-	$fp = fopen(getFilename(), "a");
+    if (!isset($_SESSION["eventlog"])) {
+        $_SESSION["eventlog"] = [];
+    }
 
-	if (flock($fp, LOCK_EX)) {
-		$eventBuffer = unserialize(file_get_contents(getFilename()));
-		ftruncate($fp, 0);
+	$eventLog = $_SESSION["eventlog"];
 
-		if (!$eventBuffer || !is_array($eventBuffer)) {
-			$eventBuffer = array();
-		} else if (count($eventBuffer) > 20) {
-			array_shift($eventBuffer);
-		}
-
-		array_push($eventBuffer, $data);
-
-		fwrite($fp, serialize($eventBuffer));
-
-		fflush($fp);
-		flock($fp, LOCK_UN);
+	if (count($eventLog) > 20) {
+		array_shift($eventLog);
 	}
+	array_push($eventLog, $data);
 
-	fclose($fp);
+    $_SESSION["eventlog"] = $eventLog;
 }
 
 function readFromEventFile()
 {
-	$fp = fopen(getFilename(), "a");
+    if (!isset($_SESSION["eventlog"])) {
+        $_SESSION["eventlog"] = [];
+    }
 
-	$data = "";
-
-	if (flock($fp, LOCK_SH)) {
-
-		$data = unserialize(file_get_contents(getFilename()));
-
-		flock($fp, LOCK_UN);
-	}
-
-	fclose($fp);
-
-	return $data;
+	return $_SESSION["eventlog"];
 }
 
 function postVal($key)
