@@ -1,7 +1,7 @@
 # sipgate-sugarcrm
 
-sipgate.io connects SugarCRM to your sipgate telephony account. It enables your enterprise to handle incoming calls seamlessly: This addon presents caller information in realtime and links to your contacts. Safe valuable time and stay focused on the customer with this easy solution.
-Works with sipgate team, sipgate basic and simquadrat.
+sipgate.io connects SugarCRM to your sipgate telephony account. It enables your enterprise to handle incoming calls seamlessly: This addon presents caller information in realtime and links to your contacts. Save valuable time and stay focused on the customer with this easy solution.  
+Works with sipgate team, sipgate basic and simquadrat and SugarCRM Community Edition up to version 6.5.
 
 ## How To
 
